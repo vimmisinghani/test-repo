@@ -6,7 +6,9 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			trim: true
 		},
-		socketId: [Object]
+		socketId: [Object],
+		msgSentCounter: Number,
+		msgReceivedCounter: Number
 	},
 	{ collection: 'users', versionKey: false }
 );

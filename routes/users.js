@@ -5,11 +5,10 @@ const { aggregateWithGroupBy, findOne, updateAll, create, upsert} = require('../
 const userModel = require('../models/user.js');
 // var buffer = require('buffer/').Buffer;
 
-var ioclient = require('socket.io-client')
-var socketForApis = ioclient.connect('http://localhost:443', {reconnect: true});
+// var ioclient = require('socket.io-client')
+// var socketForApis = ioclient.connect('http://localhost:443', {reconnect: true});
 
 // var io = require('socket.io');
-
 /* GET users listing. */
 router.get('/', async(req, res, next) => {
   connectToDatabase();
@@ -17,6 +16,7 @@ router.get('/', async(req, res, next) => {
   // console.log(Buffer.from("Hello World").toString('base64'));
   let username = queryStr.username
   let userId = Buffer.from(username).toString('base64')
+  userId = 'usr:'+userId;
   console.log('===query===', queryStr);
   // console.log('===res.io===', res.io);
   // let socketId = res.io.socket;
@@ -34,8 +34,8 @@ router.get('/', async(req, res, next) => {
 
   await upsert(filterParams, newUser, userModel);
   
-  socketForApis.emit('create', {username});
-  res.send('respond with a resource...');
+  // socketForApis.emit('create', {username});
+  res.send(200, newUser);
 
 });
 
